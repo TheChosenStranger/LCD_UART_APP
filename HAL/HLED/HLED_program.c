@@ -1,11 +1,8 @@
-#include "STD_TYPES.h"
-#include "GPIO_interface.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
 #include "HLED_interface.h"
 #include "HLED_config.h"
 
-//static u32 LEDS[MAX_LEDS];
-//static u8 LedIndex = 0;
-//static u8 PORTA_ACTIVE=0;
 STD_ERROR HLED_Init() {
 	STD_ERROR Local_STD_ERRORError = OK;
 	GPIO_t t;
@@ -30,9 +27,6 @@ STD_ERROR HLED_Init() {
 	t.pin = HLED_PORTC_LEDS;
 	Local_STD_ERRORError = GPIO_Config(&t);
 #endif
-	/*LEDS[0]=HLED_PORTA_LEDS;
-	 LEDS[1]=HLED_PORTB_LEDS;
-	 LEDS[2]=HLED_PORTC_LEDS;*/
 	return Local_STD_ERRORError;
 }
 

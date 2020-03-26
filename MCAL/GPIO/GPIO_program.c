@@ -4,9 +4,10 @@
  *  Created on: Jan 27, 2020
  *      Author: Moamen
  */
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../../LIB/STD_TYPES.h"
+
 #include "GPIO_interface.h"
+
 static GPIO_x volatile * const GPIO_PORT[3] = PORTS_ARRAY;
 
 STD_ERROR GPIO_Config(GPIO_t* p) {
