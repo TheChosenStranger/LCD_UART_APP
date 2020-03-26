@@ -5,9 +5,8 @@
  *      Author: Norhan Nassar
  */
 
-#include "STD_TYPES.h"
-#include "SYSTICK_cfg.h"
-#include "SYSTICK_interface.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../MCAL/SYSTIC/SYSTICK_interface.h"
 #include "OS_cfg.h"
 #include "OS.h"
 

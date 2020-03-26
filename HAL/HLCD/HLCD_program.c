@@ -47,16 +47,16 @@ STD_ERROR HLCD_u8Init(void)
 {
 	STD_ERROR local_error;
 	local_error  = GPIO_u8PinConfig(HLCD_E);
-	local_error &= GPIO_u8PinConfig(HLCD_RW);
-	local_error &= GPIO_u8PinConfig(HLCD_RE);
-	local_error &= GPIO_u8PinConfig(HLCD_D0);
-	local_error &= GPIO_u8PinConfig(HLCD_D1);
-	local_error &= GPIO_u8PinConfig(HLCD_D2);
-	local_error &= GPIO_u8PinConfig(HLCD_D3);
-	local_error &= GPIO_u8PinConfig(HLCD_D4);
-	local_error &= GPIO_u8PinConfig(HLCD_D5);
-	local_error &= GPIO_u8PinConfig(HLCD_D6);
-	local_error &= GPIO_u8PinConfig(HLCD_D7);
+	local_error |= GPIO_u8PinConfig(HLCD_RW);
+	local_error |= GPIO_u8PinConfig(HLCD_RE);
+	local_error |= GPIO_u8PinConfig(HLCD_D0);
+	local_error |= GPIO_u8PinConfig(HLCD_D1);
+	local_error |= GPIO_u8PinConfig(HLCD_D2);
+	local_error |= GPIO_u8PinConfig(HLCD_D3);
+	local_error |= GPIO_u8PinConfig(HLCD_D4);
+	local_error |= GPIO_u8PinConfig(HLCD_D5);
+	local_error |= GPIO_u8PinConfig(HLCD_D6);
+	local_error |= GPIO_u8PinConfig(HLCD_D7);
 	return local_error;
 }
 
