@@ -9,8 +9,8 @@
 #include "GPIO_interface.h"
 static GPIO_x volatile * const GPIO_PORT[3] = PORTS_ARRAY;
 
-STD_ERR GPIO_Config(GPIO_t* p) {
-	STD_ERR res = OK;
+STD_ERROR GPIO_Config(GPIO_t* p) {
+	STD_ERROR res = OK;
 	u8 pinNumber = 0;
 	u16 tempPin = p->pin;
 	while (tempPin != 0) {
@@ -41,8 +41,8 @@ STD_ERR GPIO_Config(GPIO_t* p) {
 }
 
 
-STD_ERR GPIO_GetPinValue(u8 Pin, u8 Port, u8* Value) {
-	STD_ERR res = 0;
+STD_ERROR GPIO_GetPinValue(u8 Pin, u8 Port, u8* Value) {
+	STD_ERROR res = 0;
 	u8 tempValue = 0;
 	if (Pin <= 15 && Port <= GPIO_PORT_C) {
 		tempValue = GPIO_PORT[Port]->IDR | Pin;
@@ -53,8 +53,8 @@ STD_ERR GPIO_GetPinValue(u8 Pin, u8 Port, u8* Value) {
 	*Value = tempValue;
 	return res;
 }
-STD_ERR GPIO_SetPinValue(u16 Pin, u8 Port, u8 Value) {
-	STD_ERR res = OK;
+STD_ERROR GPIO_SetPinValue(u16 Pin, u8 Port, u8 Value) {
+	STD_ERROR res = OK;
 	if (Value == GPIO_HIGH || Value == GPIO_LOW) {
 		//testvar=Pin&mask;
 		if (Value == GPIO_HIGH)

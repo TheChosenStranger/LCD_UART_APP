@@ -10,8 +10,8 @@ typedef struct LED_{
 
 
 
-STD_ERR HLED_Init();
-STD_ERR HLED_LedOn(u32);
-STD_ERR HLED_LedOff(u32);
+STD_ERROR HLED_Init();
+STD_ERROR HLED_LedOn(u32);
+STD_ERROR HLED_LedOff(u32);
 
 #endif
