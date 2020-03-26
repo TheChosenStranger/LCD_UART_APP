@@ -64,13 +64,13 @@ typedef  void(*rxCbf_t)(void) ;
 #define USART_PARITY_EVEN 				(USART_CR1_PE_ENABLE | USART_CR1_PS_EVEN)
 #define USART_PARITY_ODD 				(USART_CR1_PE_ENABLE | USART_CR1_PS_ODD)
 
-STD_ERROR UART_Init(void);
-STD_ERROR UART_Send(u8 * buffer, u16 len);
-STD_ERROR UART_Receive(u8 * buffer, u16* len);
-STD_ERROR UART_Configure(u32 baudrate, u8 stopBits, u8 parity, u8 flowControl);
-STD_ERROR UART_SetTxCallbackFnc(txCbf_t txcbf);
-STD_ERROR UART_SetRxCallbackFnc(rxCbf_t rxcbf);
-STD_ERROR UART_DefaultTxCallback(void);
-STD_ERROR UART_DefaultRxCallback(void);
+STD_ERR UART_Init(void);
+void UART_Send(u8 * buffer, u16 len);
+void UART_Receive(u8 * buffer, u16* len);
+STD_ERR UART_Configure(u32 baudrate, u8 stopBits, u32 parity);
+STD_ERR UART_SetTxCallbackFnc(txCbf_t txcbf);
+STD_ERR UART_SetRxCallbackFnc(rxCbf_t rxcbf);
+void UART_DefaultTxCallback(void);
+void UART_DefaultRxCallback(void);
 
 #endif
