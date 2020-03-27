@@ -5,10 +5,16 @@
 
 extern u8 TogLED;
 
+STD_ERROR Message_Init(void)
+{
+	return HUART_Init();
+}
+
+
 STD_ERROR Message_Send(u32 Num, u16 length){
 	STD_ERROR Local_STD_ERROR_Stat=OK;
 	u8 message[FRAME_LENGTH]=SPLIT_MESSAGE(Num);
-	Local_STD_ERROR_Stat=HUART_Transmit(message,FRAME_LENGTH);
+	Local_STD_ERROR_Stat=HUART_Transmit(message,length);
 	return Local_STD_ERROR_Stat;
 }
 

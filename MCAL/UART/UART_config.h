@@ -1,8 +1,6 @@
 #ifndef UART_CONFIG_H
 #define UART_CONFIG_H
 
-
-
 /*any value calculated using the equation desiered_baudrate=freq/(16*USARTDIV) )
 baudrate=((mantisa of USARTDIV)|(exponent of USARTDIV * 16))*/
 #define USART_BAUDRATE 				USART_BAUDRATE_9600_8MHZ

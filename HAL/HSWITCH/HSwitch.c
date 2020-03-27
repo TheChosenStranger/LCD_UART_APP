@@ -2,13 +2,13 @@
  * HSwitch.c
  *
  *  Created on: Mar 27, 2020
- *      Author: Electronica CARE
+ *      Author: Norhan Nassar
  */
 
-#include "STD_TYPES.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
 #include "HSwitch.h"
 #include "HSwitch_cfg.h"
-#include "GPIO_interface.h"
 
 extern Switchs_Port_t Switchs_Port_Map[];
 static STD_ERROR HSwitch_GPIO_u8ReadSwitchNum(u8 Copy_u8SwitchNum, u8* Copy_PtrData);

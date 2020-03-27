@@ -46,7 +46,7 @@ extern STD_ERROR Switch_init(void);
 /* Description: This API shall check if a certain switch is pressed or not				 */
 /* Copy_PtrState -> pointer to switch state												 */
 /*****************************************************************************************/
-extern STD_ERROR Switch_getSwitchState(u8* Copy_PtrState);
+extern STD_ERROR Switch_getSwitchState(u8 Copy_u8SwitchNum,u8* Copy_PtrSwitchState);
 
 /*****************************************************************************************/
 /* Task Runnable every given periodicity												 */

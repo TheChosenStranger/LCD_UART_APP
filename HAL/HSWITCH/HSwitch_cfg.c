@@ -6,8 +6,8 @@
  *      Version: V1.2
  */
 
-#include "STD_TYPES.h"
-#include "GPIO_interface.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
 #include "HSwitch.h"
 #include "HSwitch_cfg.h"
 

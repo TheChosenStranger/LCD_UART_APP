@@ -8,23 +8,24 @@
 #include "STD_TYPES.h"
 #include "HSwitch_cfg.h"
 #include "HSwitch.h"
-#include "OS_cfg.h"
-#include "OS.h"
 
-/* Create Switch task to read Switch status every 2msec and first delay is eqqual to 0 */
-task_t SwitchTask = {&HSwitch_Runnable,2000,0};
-
-extern u8 switchState[SWITCHES_NUMBER];
+/* this function initializes the switch*/
+STD_ERROR ControlHSwitch_init(void)
+{
+	return Switch_init(void);
+}
 
 /* this function check if switch state is 1 increment counter and send it to the UART application
  * and return state again ti zero to read it again */
-STD_ERROR ControlHSwitch()
+void ControlHSwitch_Runnable(void)
 {
 	static u32 counterToSend=0;
-	if(switchState[SWITCH_0])
+	u8 switchState = 0;
+	Switch_getSwitchState(SYSTEM_SWITCH,&switchState);
+	if(switchState)
 	{
 		counterToSend++;
-		/* call uart send to send to it this number */
+		Message_Send(counterToSend, sizeof(counterToSend));
 	}
 	return OK;
 }

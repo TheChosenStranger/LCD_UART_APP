@@ -1,8 +1,9 @@
-#include "STD_TYPES.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../GPIO/GPIO_interface.h"
 #include "UART_register.h"
 #include "UART_config.h"
 #include "UART_interface.h"
-#include "GPIO_interface.h"
+
 
 /*callback functions set to default*/
 rxCbf_t txCallback=&UART_DefaultTxCallback;
