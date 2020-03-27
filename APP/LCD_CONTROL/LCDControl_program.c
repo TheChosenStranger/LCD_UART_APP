@@ -32,10 +32,10 @@ void LCDControl_voidRunnable(void)
 	else	
 	{
 		u8 lcdData[10] = 0;
-		u8 size;
-		if(/*Get_UART_Rec(&lcdData,&size)==OK*/)
+		u16 size;
+		if(Message_Receive(&lcdData[0],&size)==OK)
 		{
-			HLCD_u8WriteDataRequest(&lcdData, size);
+			HLCD_u8WriteDataRequest(&lcdData[0], size);
 			state = RETURN_CURSOR_STATE;
 		}
 	}

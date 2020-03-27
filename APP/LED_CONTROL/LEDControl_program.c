@@ -8,7 +8,7 @@
 #include "../../HAL/HLED/HLED_interface.h"
 #include "LEDControl_interface.h"
 
-extern u8 TogLED = 0;
+extern u8 TogLED;
 
 /*This function initializes the LED*/
 STD_ERROR LEDControl_u8Init(void)
@@ -25,6 +25,7 @@ void LEDControl_voidRunnable(void)
 	static u8 led_state = 1;
 	if(TogLED)
 	{
+		TogLED = 0;
 		if(led_state)
 		{
 			HLED_LedOn(INDICATOR_LED);
