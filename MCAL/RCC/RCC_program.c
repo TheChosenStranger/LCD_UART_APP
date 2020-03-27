@@ -288,19 +288,19 @@ STD_ERROR RCC_u8MCOConfigure(u32 source)
 /*This function enables the clock for any peripheral
 [SDIO-FSMC-CRC-FLIT-SRAM-DMA2-DMA1-TIM11-TIM10-TIM9-ADC3-USART1-TIM8-SPI1-TIM1-ADC2-ADC1-IOPG-IOPF-IOPE-IOPD-IOPC-IOPB-IOPA-AFIO]*/
 
-STD_ERROR RCC_u8EnablePeripheral(u32 periferal)
+STD_ERROR RCC_u8EnablePeripheral(u32 peripheral)
 {
 	STD_ERROR local_error = OK;
-	u32 local_check = periferal & BUS_CHECK_MASK;
+	u32 local_check = peripheral  & BUS_CHECK_MASK;
 	switch(local_check)
 	{
 	/*AHB bus peripheral*/
 	case AHB_CHECK_MASK:
-		RCC->AHBENR |= periferal;	/*Enable selected AHB peripheral Clock*/
+		RCC->AHBENR |= peripheral;	/*Enable selected AHB peripheral Clock*/
 		break;
 		/*APB2 bus peripheral*/
 	case APB2_CHECK_MASK:
-		RCC->APB2ENR = periferal;	/*Enable selected APB2 peripheral Clock*/
+		RCC->APB2ENR = peripheral;	/*Enable selected APB2 peripheral Clock*/
 		break;
 		/*To be continued*/
 	default:
@@ -312,19 +312,19 @@ STD_ERROR RCC_u8EnablePeripheral(u32 periferal)
 
 /*This function disables the clock for any peripheral
 [SDIO-FSMC-CRC-FLIT-SRAM-DMA2-DMA1-TIM11-TIM10-TIM9-ADC3-USART1-TIM8-SPI1-TIM1-ADC2-ADC1-IOPG-IOPF-IOPE-IOPD-IOPC-IOPB-IOPA-AFIO]*/
-STD_ERROR RCC_u8DisablePeripheral(u32 periferal)
+STD_ERROR RCC_u8DisablePeripheral(u32 peripheral)
 {
 	STD_ERROR local_error = OK;
-	u32 local_check = periferal & BUS_CHECK_MASK;
+	u32 local_check = peripheral & BUS_CHECK_MASK;
 	switch(local_check)
 	{
 	/*AHB bus peripheral*/
 	case AHB_CHECK_MASK:
-		RCC->AHBENR &= ~periferal;	/*Disable selected AHB peripheral Clock*/
+		RCC->AHBENR &= ~peripheral;	/*Disable selected AHB peripheral Clock*/
 		break;
 		/*APB2 bus peripheral*/
 	case APB2_CHECK_MASK:
-		RCC->APB2ENR &= ~periferal;	/*Disable selected APB2 peripheral Clock*/
+		RCC->APB2ENR &= ~peripheral;	/*Disable selected APB2 peripheral Clock*/
 		break;
 		/*To be continued*/
 	default:
@@ -336,10 +336,10 @@ STD_ERROR RCC_u8DisablePeripheral(u32 periferal)
 
 /*This function gets the clock of any peripheral
 [SDIO-FSMC-CRC-FLIT-SRAM-DMA2-DMA1-SYSTK-TIM11-TIM10-TIM9-ADC3-USART1-TIM8-SPI1-TIM1-ADC2-ADC1-IOPG-IOPF-IOPE-IOPD-IOPC-IOPB-IOPA-AFIO]*/
-STD_ERROR RCC_u8GetPeripheralFreq(u32 periferal,u32 *local_sysclk)
+STD_ERROR RCC_u8GetPeripheralFreq(u32 peripheral ,u32 *local_sysclk)
 {
 	STD_ERROR local_error = OK;
-	u32 local_check = periferal & BUS_CHECK_MASK;
+	u32 local_check = peripheral & BUS_CHECK_MASK;
 	u32 pll_mult;
 	/*Get SYSCLK*/
 	*local_sysclk = (RCC->CFGR & SWS_MASK);

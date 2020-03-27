@@ -152,6 +152,8 @@ static void HLCD_voidWriteDataCmd(u8 Copy_u8DataCmd)
 	GPIO_u8SetPinValue(HLCD_D7,( (Copy_u8DataCmd>>HLCD_D7_BIT) & ONE_MASK) );
 }
 
+/*This function does the initialization sequence for the LCD
+ then checks the local buffer for a data or a command and apply it on the LCD*/
 void HLCD_voidRunnable(void)
 {
 	static u8 HLCD_E_state = 0;

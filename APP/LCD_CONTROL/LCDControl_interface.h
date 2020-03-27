@@ -10,11 +10,11 @@ STD_ERROR LCDControl_u8Init(void);
 void LCDControl_voidRunnable(void);
 
 /*The task for the module to be run by the scheduler*/
-task_t LCDControlTask
+task_t LCDControlTask =
 {
-	LCDControl_voidRunnable;
-	500;
-	100;
-} ;
+	LCDControl_voidRunnable,
+	500,
+	0
+};
 
 #endif

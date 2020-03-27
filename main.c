@@ -22,18 +22,22 @@
 void main(void)
 {
 	/*Selecting systems Clk*/
-	/*Enable GPIOs Clocks*/
+	RCC_u8EnableClock(HSI);
+	RCC_u8SystemClockSelect(HSI);
+	/*Enabling needed peripheral */
+	RCC_u8EnablePeripheral(IOPA);
+	RCC_u8EnablePeripheral(IOPB);
+	RCC_u8EnablePeripheral(IOPC);
+	RCC_u8EnablePeripheral(USART1);
 
 	/*Initializing All modules*/
-	SYSTICK_u8Init();
-
 	LEDControl_u8Init();
 	LCDControl_u8Init();
 	/*Starting the scheduler*/
 	Sched_init();
 	Sched_CreatTask(&LCDControlTask,2);
 	Sched_CreatTask(&LEDControlTask,3);
-	SYSTICK_u8SetTime(1000);	/*1000 us*/
-	SYSTICK_u8SetCallback(Sched_SystickCbf);
 	Sched_Start();
+	while(1)
+	{}
 }

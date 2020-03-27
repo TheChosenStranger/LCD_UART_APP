@@ -1,7 +1,14 @@
+/******************************/
+/* Author  : Moustafa Ghareeb */
+/* Version : V1.0             */
+/* Date    : 27-03-2020       */
+/******************************/
 #include "../../LIB/STD_TYPES.h"
 #include "../../MCAL/GPIO/GPIO_interface.h"
 #include "../../HAL/HLED/HLED_interface.h"
 #include "LEDControl_interface.h"
+
+extern u8 TogLED = 0;
 
 /*This function initializes the LED*/
 STD_ERROR LEDControl_u8Init(void)
@@ -16,9 +23,7 @@ STD_ERROR LEDControl_u8Init(void)
 void LEDControl_voidRunnable(void)
 {
 	static u8 led_state = 1;
-	u8 recData = 0;
-	/*Get UART rec (& recData)*/
-	if(recData)
+	if(TogLED)
 	{
 		if(led_state)
 		{
