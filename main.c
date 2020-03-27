@@ -7,11 +7,8 @@
 /*Including OS layer*/
 #include "./OS/OS.h"
 /*Including MCAL layers modules*/
-//#include "./MCAL/GPIO/GPIO_interface.h"
 #include "./MCAL/RCC/RCC_interface.h"
 #include "./MCAL/NVIC/NVIC_interface.h"
-//#include "./MCAL/SYS#include "../MCAL/SYSTICK/SYSTICK_interface.h"TIC/SYSTIC_interface.h"
-//#include "./MCAL/UART/UART_interface.h"
 /*Including HAL layers modules*/
 #include "./HAL/HLCD/HLCD_interface.h"
 #include "./HAL/HLED/HLED_interface.h"

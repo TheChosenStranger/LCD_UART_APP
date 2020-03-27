@@ -33,8 +33,10 @@
 #define I2C1_ER			32
 #define I2C2_EV			33
 #define I2C2_ER			34
+#undef	SPI1
 #define SPI1			35
 #define SPI2			36
+#undef	USART1
 #define USART1			37
 #define USART2			38
 #define USART3			39
@@ -88,6 +90,7 @@
 /**************************************************/
 /* To change base address of vector table and it will be at Code or SRAM */
 #define Code							0x20000000
+#undef	SRAM
 #define SRAM							0x1FFFFFFF
 /*************************************************/
 /* Mask to get the external interrupt number pending at time */
