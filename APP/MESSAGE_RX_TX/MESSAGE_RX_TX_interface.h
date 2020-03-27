@@ -16,9 +16,7 @@
 #define SPLIT_MESSAGE(NUM) { GET_BYTE(NUM,BYTE_0_MASK,BYTE_0_OFFSET) , GET_BYTE(NUM,BYTE_1_MASK,BYTE_1_OFFSET) , GET_BYTE(NUM,BYTE_2_MASK,BYTE_2_OFFSET) , GET_BYTE(NUM,BYTE_3_MASK,BYTE_3_OFFSET) }
 #define CONCAT_MESSAGE(NUM0,NUM1,NUM2,NUM3) ((NUM0 << BYTE_0_OFFSET )|(NUM1 << BYTE_1_OFFSET )|(NUM2 << BYTE_2_OFFSET )|(NUM3 << BYTE_3_OFFSET ))
 
-void NumberToString(u32,u8*,u16*);
-void StringToNumber(u32*,u8*,u16);
-void u8GetNumberLength(u32 Copy_u32_Number,u16* length);
-u32 getPower(u32 num, u8 pow);
+STD_ERROR Message_Send(u32 Num, u16 length);
+STD_ERROR Message_Receive(u8* buffer, u16* length);
 
 #endif
