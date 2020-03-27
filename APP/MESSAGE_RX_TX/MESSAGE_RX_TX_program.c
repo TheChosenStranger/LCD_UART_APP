@@ -17,7 +17,7 @@ STD_ERROR Message_Receive(u8* buffer, u16* length){
 	Local_STD_ERROR_Stat=HUART_Recieve(tempBuffer,&tempLength);
 	if(Local_STD_ERROR_Stat==OK){
 		tempMessage=CONCAT_MESSAGE(tempBuffer[0],tempBuffer[1],tempBuffer[2],tempBuffer[3]);
-		NumberToString(u32 tempMessage,buffer,length);
+		NumberToString(tempMessage,buffer,length);
 	}	
 	return Local_STD_ERROR_Stat;
 }
