@@ -1,6 +1,6 @@
-#include "STD_TYPES.h"
-#include "UTIL_interface.h"
-#include "HUART_interface.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../LIB/UTIL_interface.h"
+#include "../../HAL/HUART/HUART_interface.h"
 #include "MESSAGE_RX_TX_interface.h"
 
 extern u8 TogLED;

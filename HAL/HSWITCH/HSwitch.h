@@ -40,13 +40,13 @@ typedef struct
 /* Description: This API shall initialize all Switchs at configuration file to be Input   */
 /* Pull up or pull down for each port 										 			  */
 /******************************************************************************************/
-extern STD_ERROR Switch_init(void);
+extern STD_ERROR HSwitch_init(void);
 
 /*****************************************************************************************/
 /* Description: This API shall check if a certain switch is pressed or not				 */
 /* Copy_PtrState -> pointer to switch state												 */
 /*****************************************************************************************/
-extern STD_ERROR Switch_getSwitchState(u8 Copy_u8SwitchNum,u8* Copy_PtrSwitchState);
+extern STD_ERROR HSwitch_getSwitchState(u8 Copy_u8SwitchNum,u8* Copy_PtrSwitchState);
 
 /*****************************************************************************************/
 /* Task Runnable every given periodicity												 */

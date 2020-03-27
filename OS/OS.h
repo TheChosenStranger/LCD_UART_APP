@@ -44,7 +44,7 @@ extern STD_ERROR Sched_Start(void);
 extern void Sched_Runnable(void);
 
 /* Call back function for systick handler, to increment the flag that a tick has arrived */
-extern STD_ERROR Sched_SystickCbf(void);
+extern void Sched_SystickCbf(void);
 
 /* taskRunnable -> address of the task call back function that you want to suspend it */
 extern STD_ERROR Task_Suspend(taskRunnable_t tasktosus);

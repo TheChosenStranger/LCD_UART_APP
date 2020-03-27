@@ -33,7 +33,7 @@ void LCDControl_voidRunnable(void)
 	}
 	else	
 	{
-		u8 lcdData[10] = 0;
+		u8 lcdData[10] = {0};
 		u16 size;
 		if(Message_Receive(&lcdData[0],&size)==OK)
 		{

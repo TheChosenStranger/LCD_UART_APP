@@ -4,10 +4,12 @@
 /* Date    : 27-03-2020       */
 /******************************/
 #include "../../LIB/STD_TYPES.h"
+#include "../../MCAL/GPIO/GPIO_interface.h"
+#include "../../HAL/HLED/HLED_config.h"
 #include "../../HAL/HLED/HLED_interface.h"
 #include "LEDControl_interface.h"
 
-extern u8 TogLED;
+u8 TogLED;
 
 /*This function initializes the LED*/
 STD_ERROR LEDControl_u8Init(void)

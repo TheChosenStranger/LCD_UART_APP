@@ -5,21 +5,20 @@
  *      Author: Norhan Nassar
  */
 
-#include "STD_TYPES.h"
-#include "SYSTICK_cfg.h"
-#include "SYSTICK_interface.h"
+#include "../LIB/STD_TYPES.h"
+#include "../MCAL/SYSTICK/SYSTICK_interface.h"
 #include "OS_cfg.h"
 #include "OS.h"
+
 
 static u8 schedStartFlag = 0;
 
 static taskInfo_t Systasks[MAXTASKNUM];
 
 /* Call back function for systick handler, to increment the flag that a tick has arrived */
-STD_ERROR Sched_SystickCbf(void)
+void Sched_SystickCbf(void)
 {
 	schedStartFlag++;				/* to handle alot of one if an interrupt cut one while running */
-	return OK;
 }
 
 /* at cfg file
@@ -28,11 +27,11 @@ STD_ERROR Sched_init(void)
 {
 	/* Init SYSTICK to make an interrupt every tick time in micro sec */
 	/* NOT_OK -> 1 */
-	if(SYSTICK_Init())
+	if(SYSTICK_u8Init())
 		return NOT_OK;
-	if(SYSTICK_SetTime(TICKTIMEUS))
+	if(SYSTICK_u8SetTime(TICKTIMEUS))
 		return NOT_OK;
-	if(SYSTICK_SetCallBack(&Sched_SystickCbf))
+	if(SYSTICK_u8SetCallback(&Sched_SystickCbf))
 		return NOT_OK;
 
 	return OK;
@@ -40,7 +39,7 @@ STD_ERROR Sched_init(void)
 
 STD_ERROR Sched_Start(void)
 {
-	if(SYSTICK_Start())					/* Start Systick to start count */
+	if(SYSTICK_u8Start())					/* Start Systick to start count */
 		return NOT_OK;					/* if systick returns NOT_OK =1 so Sched_start returns NOT_OK */
 	while(1)
 	{

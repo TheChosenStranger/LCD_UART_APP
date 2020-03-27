@@ -13,7 +13,7 @@
 extern Switchs_Port_t Switchs_Port_Map[];
 static STD_ERROR HSwitch_GPIO_u8ReadSwitchNum(u8 Copy_u8SwitchNum, u8* Copy_PtrData);
 
-extern u8 switchState[SWITCHES_NUMBER];
+static u8 switchState[SWITCHES_NUMBER];
 
 STD_ERROR HSwitch_init()
 {
@@ -29,13 +29,13 @@ STD_ERROR HSwitch_init()
 		{
 			Switch_GPIO_Pin.pin |= Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin;
 			if(Switchs_Port_Map[PortCounter].Switchs_Port_Pins->SWITCH_STATE==SWITCH_PULL_UP)
-				GPIO_u8Write(Switchs_Port_Map[PortCounter].Switchs_Port,Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,1);
+				GPIO_SetPinValue(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,Switchs_Port_Map[PortCounter].Switchs_Port,1);
 			else /* if user not configure its state it will be by default pull down */
-				GPIO_u8Write(Switchs_Port_Map[PortCounter].Switchs_Port,Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,0);
+				GPIO_SetPinValue(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,Switchs_Port_Map[PortCounter].Switchs_Port,0);
 		}
 		Switch_GPIO_Pin.mode = GPIO_CNF_IP_PULL_UP_DOWN;
 		Switch_GPIO_Pin.speed=GPIO_MODE_INPUT;
-		GPIO_voidConfigure(&Switch_GPIO_Pin);
+		GPIO_Config(&Switch_GPIO_Pin);
 	}
 	return loc_err;
 }
@@ -85,7 +85,7 @@ STD_ERROR HSwitch_GPIO_u8ReadSwitchNum(u8 Copy_u8SwitchNum, u8* Copy_PtrData)
 		{
 			if(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Num==Copy_u8SwitchNum)
 			{
-				loc_err = GPIO_SetPinValue(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,Switchs_Port_Map[PortCounter].Switchs_Port,Copy_PtrData);
+				loc_err = GPIO_GetPinValue(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,Switchs_Port_Map[PortCounter].Switchs_Port,Copy_PtrData);
 				return loc_err;
 			}
 		}

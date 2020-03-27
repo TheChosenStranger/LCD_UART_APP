@@ -18,6 +18,4 @@
 /*PortC leds*/
 #define HLED_PORTC_LEDS ((LED_0) & HLED_PIN_MASK)
 
-#define 
-
 #endif

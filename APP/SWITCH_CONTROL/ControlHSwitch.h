@@ -14,6 +14,6 @@
 STD_ERROR ControlHSwitch_init(void);
 /* this function check if switch state is 1 increment counter and send it to the UART application
  * and return state again ti zero to read it again */
-void ControlHSwitch(void);
+void ControlHSwitch_Runnable(void);
 
 #endif

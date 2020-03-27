@@ -22,7 +22,7 @@ GPIO_t HLCD_D6 ={HLCD_D6_PIN,HLCD_D6_PORT,HLCD_PIN_MODE,HLCD_PIN_SPEED};
 GPIO_t HLCD_D7 ={HLCD_D7_PIN,HLCD_D7_PORT,HLCD_PIN_MODE,HLCD_PIN_SPEED};
 /*Defining private functions*/
 static void HLCD_voidWriteData(u8 Copy_u8Data);
-static void CLCD_voidWriteCmd(u8 Copy_u8Command);
+static void HLCD_voidWriteCmd(u8 Copy_u8Command);
 static void HLCD_voidWriteDataCmd(u8 Copy_u8DataCmd);
 /*Defining LCD STATES*/
 #define	HLCD_INITIAL_STATE	0
@@ -46,17 +46,17 @@ static u8 dataCounter;
 STD_ERROR HLCD_u8Init(void)
 {
 	STD_ERROR local_error;
-	local_error  = GPIO_Config(HLCD_E );
-	local_error |= GPIO_Config(HLCD_RW);
-	local_error |= GPIO_Config(HLCD_RE);
-	local_error |= GPIO_Config(HLCD_D0);
-	local_error |= GPIO_Config(HLCD_D1);
-	local_error |= GPIO_Config(HLCD_D2);
-	local_error |= GPIO_Config(HLCD_D3);
-	local_error |= GPIO_Config(HLCD_D4);
-	local_error |= GPIO_Config(HLCD_D5);
-	local_error |= GPIO_Config(HLCD_D6);
-	local_error |= GPIO_Config(HLCD_D7);
+	local_error  = GPIO_Config(&HLCD_E );
+	local_error |= GPIO_Config(&HLCD_RW);
+	local_error |= GPIO_Config(&HLCD_RS);
+	local_error |= GPIO_Config(&HLCD_D0);
+	local_error |= GPIO_Config(&HLCD_D1);
+	local_error |= GPIO_Config(&HLCD_D2);
+	local_error |= GPIO_Config(&HLCD_D3);
+	local_error |= GPIO_Config(&HLCD_D4);
+	local_error |= GPIO_Config(&HLCD_D5);
+	local_error |= GPIO_Config(&HLCD_D6);
+	local_error |= GPIO_Config(&HLCD_D7);
 	return local_error;
 }
 
@@ -102,7 +102,7 @@ STD_ERROR HLCD_u8WriteCmdRequest(u8 Copy_u8Cmd)
 STD_ERROR HLCD_u8CursorPosition(u8 Copy_u8Row, u8 Copy_u8Column)
 {
 	STD_ERROR local_error;
-	if(Copy_u8Row<HLCD_ROWS & Copy_u8Column<HLCD_COLS)
+	if((Copy_u8Row<HLCD_ROWS) & (Copy_u8Column<HLCD_COLS))
 	{
 		u8 cursor_position= (0b10000000|(Copy_u8Row<<HLCD_ROW_SHIFT)|(Copy_u8Column));
 		local_error = HLCD_u8WriteCmdRequest(cursor_position);
@@ -122,19 +122,19 @@ static void HLCD_voidWriteData(u8 Copy_u8Data)
 	GPIO_SetPinValue(HLCD_RS_PIN,HLCD_RS_PORT,GPIO_HIGH);
 	GPIO_SetPinValue(HLCD_RW_PIN,HLCD_RW_PORT,GPIO_LOW);
 	/*Send the data to be written*/
-	HLCD_voidWriteDataCmd(u8 Copy_u8Data);
+	HLCD_voidWriteDataCmd(Copy_u8Data);
 	/*E pulse*/
 	GPIO_SetPinValue(HLCD_E_PIN,HLCD_E_PORT,GPIO_HIGH);
 }
 
 /*This function writes command on the data pins for the LCD*/
-static void CLCD_voidWriteCmd(u8 Copy_u8Command)
+static void HLCD_voidWriteCmd(u8 Copy_u8Command)
 {
 	/*RS is low and RW is low for writing command*/
 	GPIO_SetPinValue(HLCD_RS_PIN,HLCD_RS_PORT,GPIO_LOW);
 	GPIO_SetPinValue(HLCD_RW_PIN,HLCD_RW_PORT,GPIO_LOW);
 	/*Send the command to be written*/
-	HLCD_voidWriteDataCmd(u8 Copy_u8Command);
+	HLCD_voidWriteDataCmd(Copy_u8Command);
 	/*E pulse*/
 	GPIO_SetPinValue(HLCD_E_PIN,HLCD_E_PORT,GPIO_HIGH);
 }
@@ -170,14 +170,14 @@ void HLCD_voidRunnable(void)
 			if(dataCounter>HLCD_COLS) /*Command is to be written*/
 			{
 				dataCounter = 0;
-				HLCD_u8WriteCmd(HLCD_data_cmd[dataCounter]);
+				HLCD_voidWriteCmd(HLCD_data_cmd[dataCounter]);
 				HLCD_E_state = 1;
 				
 			}
 			else if (dataCounter>0) /*Data is to be written*/
 			{
 				dataCounter--;
-				HLCD_u8WriteCmd(HLCD_data_cmd[dataCounter]);
+				HLCD_voidWriteData(HLCD_data_cmd[dataCounter]);
 				HLCD_E_state = 1;
 			
 			}
@@ -192,7 +192,7 @@ void HLCD_voidRunnable(void)
 		switch(HLCD_state)	/*Start the initialization sequence*/
 		{
 			case HLCD_INITIAL_STATE:/*S0: Set up the LCD*/
-			HLCD_u8WriteCmd(LINES_FONT_INIT);
+			HLCD_voidWriteCmd(LINES_FONT_INIT);
 			HLCD_state = HLCD_STATE1 ;
 			break;
 
@@ -202,7 +202,7 @@ void HLCD_voidRunnable(void)
 			break;
 			
 			case HLCD_STATE2 : /*S2: Set up the cursor*/
-			HLCD_u8WriteCmd(CURSOR_INIT);
+			HLCD_voidWriteCmd(CURSOR_INIT);
 			HLCD_state = HLCD_STATE3 ;
 			break;
 
@@ -212,7 +212,7 @@ void HLCD_voidRunnable(void)
 			break;
 
 			case HLCD_STATE4 : /*S4: Clear the display*/
-			HLCD_u8WriteCmd(CLEAR_DISPLAY);
+			HLCD_voidWriteCmd(CLEAR_DISPLAY);
 			HLCD_state = HLCD_STATE5 ;
 			break;
 			

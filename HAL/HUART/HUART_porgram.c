@@ -4,7 +4,7 @@
 
 STD_ERROR HUART_Init(void)
 {
-	return UART_Init;
+	return UART_Init();
 }
 
 STD_ERROR HUART_Transmit(u8* buffer,u16 length){
@@ -25,6 +25,6 @@ STD_ERROR HUART_Recieve(u8* buffer,u16* length){
 	if(temp==0)
 		Local_STD_ERROR_stat=NOT_OK;
 	else
-		UART_Recieve(buffer,length);
+		UART_Receive(buffer,length);
 	return Local_STD_ERROR_stat;
 }

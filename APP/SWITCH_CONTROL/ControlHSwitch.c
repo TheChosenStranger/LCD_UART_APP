@@ -5,14 +5,16 @@
  *      Author: Norhan Nassar
  *      Version: V1.2
  */
-#include "STD_TYPES.h"
-#include "HSwitch_cfg.h"
-#include "HSwitch.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../MESSAGE_RX_TX/MESSAGE_RX_TX_interface.h"
+#include "../../HAL/HSwitch/HSwitch_cfg.h"
+#include "../../HAL/HSwitch/HSwitch.h"
+#include "ControlHSwitch.h"
 
 /* this function initializes the switch*/
 STD_ERROR ControlHSwitch_init(void)
 {
-	return Switch_init(void);
+	return HSwitch_init();
 }
 
 /* this function check if switch state is 1 increment counter and send it to the UART application
@@ -21,20 +23,10 @@ void ControlHSwitch_Runnable(void)
 {
 	static u32 counterToSend=0;
 	u8 switchState = 0;
-	Switch_getSwitchState(SYSTEM_SWITCH,&switchState);
+	HSwitch_getSwitchState(SYSTEM_SWITCH,&switchState);
 	if(switchState)
 	{
 		counterToSend++;
 		Message_Send(counterToSend, sizeof(counterToSend));
 	}
-	return OK;
 }
-
-/* this task will be
- * 5*2msec -> 10000
- * or more */
-//task_t ControlSwitchTask = {&ControlSwitchTask,10000,0};
-
-
-
-
