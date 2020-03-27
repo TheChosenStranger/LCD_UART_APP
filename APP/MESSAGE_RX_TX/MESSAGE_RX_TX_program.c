@@ -1,4 +1,5 @@
 #include "STD_TYPES.h"
+#include "UTIL_interface.h"
 #include "HUART_interface.h"
 #include "MESSAGE_RX_TX_interface.h"
 
