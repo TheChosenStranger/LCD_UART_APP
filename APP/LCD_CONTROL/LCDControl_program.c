@@ -9,6 +9,8 @@
 
 #include "LCDControl_interface.h"
 
+#include "../MESSAGE_RX_TX/MESSAGE_RX_TX_interface.h"
+
 #define RETURN_CURSOR_STATE		0
 #define	WRITE_DATA_STATE		1
 
