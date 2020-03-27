@@ -99,7 +99,7 @@ STD_ERROR HLCD_u8WriteCmdRequest(u8 Copy_u8Cmd)
 }
 
 /*This function changes the cursor position: ROW[0-1] COL[0-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15]*/
-STD_ERROR CLCD_u8CursorPosition(u8 Copy_u8Row, u8 Copy_u8Column)
+STD_ERROR HLCD_u8CursorPosition(u8 Copy_u8Row, u8 Copy_u8Column)
 {
 	STD_ERROR local_error;
 	if(Copy_u8Row<HLCD_ROWS & Copy_u8Column<HLCD_COLS)

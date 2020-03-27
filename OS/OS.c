@@ -44,7 +44,7 @@ STD_ERROR Sched_init(void)
 
 STD_ERROR Sched_Start(void)
 {
-	if(SYSTICK_Start() == NOT_OK )		/* Start Systick to start count */
+	if(SYSTICK_u8Start() == NOT_OK )		/* Start Systick to start count */
 		return NOT_OK;
 	while(1)
 	{
