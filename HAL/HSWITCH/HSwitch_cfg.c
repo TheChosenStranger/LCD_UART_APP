@@ -13,7 +13,7 @@
 
 /* Configure each Switch on your system to a certain Pin at a certain Port
  * and configure its state -> SWITCH_PULL_UP or SWITCH_PULL_DOWN */
-#define SWITCHES_PORTB { {SWITCH_0,GPIO_PIN0,SWITCH_PULL_UP}};
+#define SWITCHES_PORTB { {SWITCH_0,GPIO_PIN0,SWITCH_PULL_DOWN}};
 
 Switch_Pin_t Switchs_PORTB[SWITCHES_PORTB_NUM]=SWITCHES_PORTB
-Switchs_Port_t Switchs_Port_Map[PORTS_NUM] = { {PORTB,SWITCHES_PORTB_NUM,(Switch_Pin_t*)&Switchs_PORTB} };
+Switchs_Port_t Switchs_Port_Map[PORTS_NUM] = { {GPIO_PORT_B,SWITCHES_PORTB_NUM,(Switch_Pin_t*)&Switchs_PORTB} };

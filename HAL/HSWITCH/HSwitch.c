@@ -19,22 +19,22 @@ STD_ERROR HSwitch_init()
 {
 	STD_ERROR loc_err = OK;
 	u8 PortCounter,PinCounter;
-	GPIO_Conf_Pin_t Switch_GPIO_Pin;				/* struct of type GPIO to configure it with this one */
-	Switch_GPIO_Pin.Pin=CLEAR;						/* Initialize Pin at GPIO struct to 0 */
+	GPIO_t Switch_GPIO_Pin;				/* struct of type GPIO to configure it with this one */
+	Switch_GPIO_Pin.pin=CLEAR;						/* Initialize Pin at GPIO struct to 0 */
 
 	for(PortCounter=0;PortCounter<PORTS_NUM;PortCounter++)
 	{
-		Switch_GPIO_Pin.Port = Switchs_Port_Map[PortCounter].Switchs_Port;
+		Switch_GPIO_Pin.port = Switchs_Port_Map[PortCounter].Switchs_Port;
 		for(PinCounter=0;PinCounter<Switchs_Port_Map[PortCounter].Switchs_Port_Num;PinCounter++)
 		{
-			Switch_GPIO_Pin.Pin |= Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin;
+			Switch_GPIO_Pin.pin |= Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin;
 			if(Switchs_Port_Map[PortCounter].Switchs_Port_Pins->SWITCH_STATE==SWITCH_PULL_UP)
 				GPIO_u8Write(Switchs_Port_Map[PortCounter].Switchs_Port,Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,1);
 			else /* if user not configure its state it will be by default pull down */
 				GPIO_u8Write(Switchs_Port_Map[PortCounter].Switchs_Port,Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,0);
 		}
-		Switch_GPIO_Pin.Mode_Configure = MODE_IP_PUPD;
-		Switch_GPIO_Pin.Mode_Speed=IP_NOSPEED;
+		Switch_GPIO_Pin.mode = GPIO_CNF_IP_PULL_UP_DOWN;
+		Switch_GPIO_Pin.speed=GPIO_MODE_INPUT;
 		GPIO_voidConfigure(&Switch_GPIO_Pin);
 	}
 	return loc_err;
@@ -85,7 +85,7 @@ STD_ERROR HSwitch_GPIO_u8ReadSwitchNum(u8 Copy_u8SwitchNum, u8* Copy_PtrData)
 		{
 			if(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Num==Copy_u8SwitchNum)
 			{
-				loc_err = GPIO_u8Read(Switchs_Port_Map[PortCounter].Switchs_Port,Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,Copy_PtrData);
+				loc_err = GPIO_SetPinValue(Switchs_Port_Map[PortCounter].Switchs_Port_Pins[PinCounter].Switch_Pin,Switchs_Port_Map[PortCounter].Switchs_Port,Copy_PtrData);
 				return loc_err;
 			}
 		}
