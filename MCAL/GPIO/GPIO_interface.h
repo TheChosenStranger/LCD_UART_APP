@@ -85,7 +85,7 @@ typedef struct GPIO_t {
 } GPIO_t;
 
 STD_ERROR GPIO_Config(GPIO_t*);
-STD_ERROR GPIO_GetPinValue(u8 Pin, u8 Port, u8* Value);
+STD_ERROR GPIO_GetPinValue(u16 Pin, u8 Port, u8* Value);
 STD_ERROR GPIO_SetPinValue(u16 Pin, u8 Port, u8 Value);
 
 #endif /* GPIO_INTERFACE_H_ */

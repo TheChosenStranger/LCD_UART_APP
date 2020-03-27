@@ -4,6 +4,19 @@
 typedef  void(*txCbf_t)(void) ;
 typedef  void(*rxCbf_t)(void) ;
 
+#define USART1_TX_PORT 				GPIO_PORT_A
+#define USART1_TX_PIN  				GPIO_PIN9 
+
+#define USART1_RX_PORT 				GPIO_PORT_A
+#define USART1_RX_PIN  				GPIO_PIN10
+
+#define USART1_TX_MODE 				GPIO_CNF_GPO_PUSH_PULL
+#define USART1_TX_SPEED 			GPIO_MODE_OUTPUT_50_MHZ
+
+
+#define USART1_RX_CNF				GPIO_CNF_IP_PULL_UP_DOWN
+#define USART1_RX_MODE 				GPIO_MODE_INPUT
+
 #define USART_SR_TXE_MASK 				0x00000080
 #define USART_SR_TC_MASK 				0x00000040
 #define USART_SR_RXNE_MASK 				0x00000020
@@ -14,7 +27,7 @@ typedef  void(*rxCbf_t)(void) ;
 
 #define USART_BAUDRATE_9600_8MHZ 		0x00000341
 #define USART_BAUDRATE_115200_8MHZ 		0x00000069
-/*el ba2y ba3deen*/
+
 
 #define USART_CR1_UE_MASK	 			0x00002000
 #define USART_CR1_MWORD_LENGTH_MASK 	0x00001000
