@@ -62,7 +62,7 @@ STD_ERROR RCC_u8SystemClockSelect(u8 source)
 	return local_error;
 }
 
-/*This function takes the name of the clock as input and enables it [HSI-HSE-PLL]*/
+/*This function enables a certain clock [HSI-HSE-PLL]*/
 STD_ERROR RCC_u8EnableClock(u8 source)
 {
 	STD_ERROR local_error = OK;
@@ -96,7 +96,7 @@ STD_ERROR RCC_u8EnableClock(u8 source)
 	return local_error;
 }
 
-/*This function takes the name of the clock as input and Disables it unless it is the SYSCLK [HSI-HSE-PLL]*/
+/*This function Disables a certain clock unless it is the SYSCLK [HSI-HSE-PLL]*/
 STD_ERROR RCC_u8DisableClock(u8 source)
 {
 	STD_ERROR local_error = OK;
@@ -139,8 +139,9 @@ STD_ERROR RCC_u8DisableClock(u8 source)
 	return local_error;
 }
 
-/*This function configures the prescaler of any desired bus by the desired value [APB2-APB1-AHB] 
-	[1-2-4-8-16] + [64-128-256-512] "for th AHB" note that the default value is '1'
+/*This function configures the prescaler of any desired bus by the desired value 
+	-	bus : [APB2-APB1-AHB] 
+	-	division : [1-2-4-8-16] + [64-128-256-512] "for th AHB" note that the default value is '1'
  */
 STD_ERROR RCC_u8BusPrescaler(u8 bus,u16 division)
 {
@@ -226,9 +227,10 @@ STD_ERROR RCC_u8BusPrescaler(u8 bus,u16 division)
 	return local_error;
 }
 
-/*This function configures the prescaler of the PLL clock and its source as input [HSI-HSE] 
-	[1-2] for division
-	[2-3-4-5-6-7-8-9-10-11-12-13-14-15-16] for multiplier
+/*This function configures the prescaler of the PLL clock and its source as input 
+	-	source 	   : [HSI-HSE] 
+	-	division   : [1-2]
+	-	multiplier : [2-3-4-5-6-7-8-9-10-11-12-13-14-15-16]
  */
 STD_ERROR RCC_u8PLLConfigure(u8 source,u8 division,u8 multiplier)
 {
@@ -334,7 +336,7 @@ STD_ERROR RCC_u8DisablePeripheral(u32 peripheral)
 	return local_error;
 }
 
-/*This function gets the clock of any peripheral
+/*This function gets the clock of any peripheral and returns the value in MHz
 [SDIO-FSMC-CRC-FLIT-SRAM-DMA2-DMA1-SYSTK-TIM11-TIM10-TIM9-ADC3-USART1-TIM8-SPI1-TIM1-ADC2-ADC1-IOPG-IOPF-IOPE-IOPD-IOPC-IOPB-IOPA-AFIO]*/
 STD_ERROR RCC_u8GetPeripheralFreq(u32 peripheral ,u32 *local_sysclk)
 {

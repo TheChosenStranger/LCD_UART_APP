@@ -22,7 +22,7 @@ typedef struct SYSTIC_
 /*This is the local pointer to funtion which will hold the address for the call back function*/
 static void(*SysTick_Callbackfun)(void);
 
-/*This function enables SYSTIC exception and sets the prescaler to none*/
+/*This function initializes the SYSTICK with the prebuild configurations*/
 STD_ERROR SYSTICK_u8Init(void)
 {
 	STD_ERROR local_error = OK;
@@ -49,7 +49,7 @@ STD_ERROR SYSTICK_u8SetTime(u32 Copy_Time_us)
 	return local_error;
 }
 
-/*This function changes the prescaler [SYSTIC_PRESCALER_NONE - SYSTIC_PRESCALER_BY8] */
+/*This function changes the prescaler for the SYSTICK [SYSTIC_PRESCALER_NONE - SYSTIC_PRESCALER_BY8] */
 STD_ERROR SYSTICK_u8SetPrescaler(u32 Copy_Prescaler)
 {
 	STD_ERROR local_error = OK;
@@ -80,7 +80,7 @@ STD_ERROR SYSTICK_u8Stop(void)
 	return local_error;
 }
 
-/*This function sets the Callback function for the Systic timer*/
+/*This function sets the Callback function for the SYSTICK timer*/
 STD_ERROR SYSTICK_u8SetCallback(void(*Copy_ptr)(void))
 {
 	STD_ERROR local_error = OK;
@@ -91,7 +91,7 @@ STD_ERROR SYSTICK_u8SetCallback(void(*Copy_ptr)(void))
 	return local_error;
 }
 
-/*This is the Interrupt for the SysTick timer which calls the call back function*/
+/*This is the Interrupt for the SYSTICK timer which calls the call back function*/
 void SysTick_Handler(void)
 {
 	SysTick_Callbackfun();

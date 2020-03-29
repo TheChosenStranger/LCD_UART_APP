@@ -9,6 +9,7 @@
 
 #include "HLCD_interface.h"
 
+/*Defining LCD Pins as GPIO_t*/
 GPIO_t HLCD_E  ={HLCD_E_PIN ,HLCD_E_PORT ,HLCD_PIN_MODE,HLCD_PIN_SPEED};
 GPIO_t HLCD_RS ={HLCD_RS_PIN,HLCD_RS_PORT,HLCD_PIN_MODE,HLCD_PIN_SPEED};
 GPIO_t HLCD_RW ={HLCD_RW_PIN,HLCD_RW_PORT,HLCD_PIN_MODE,HLCD_PIN_SPEED};
@@ -32,15 +33,17 @@ static void HLCD_voidWriteDataCmd(u8 Copy_u8DataCmd);
 #define	HLCD_STATE4 	4
 #define	HLCD_STATE5 	5
 #define	HLCD_STATE6 	6
-
+/*Defining LCD maximum Columns and Rows*/
 #define HLCD_COLS		16 
 #define HLCD_ROWS		2 
 /*This holds the current state of the LCD*/
 static u8 HLCD_state = HLCD_INITIAL_STATE;
+/*This indicates whether is busy or not*/
 static u8 HLCD_busy = 0;
+/*This holds the data or command being applied*/
 static u8 HLCD_data_cmd[HLCD_COLS];
+/*This holds the data size*/
 static u8 dataCounter;
-
 
 /*This function initializes the LCD pins*/
 STD_ERROR HLCD_u8Init(void)
@@ -64,7 +67,7 @@ STD_ERROR HLCD_u8Init(void)
 STD_ERROR HLCD_u8WriteDataRequest(u8* Copy_u8Data, u8 Copy_u8Size)
 {
 	STD_ERROR local_error = OK;
-	if (!HLCD_busy) /*If the data/command reg is empty accept new data*/
+	if (!HLCD_busy && Copy_u8Size<=HLCD_COLS) /*If the data/command reg is empty and the size of the data is less than max columns accept new data*/
 	{
 		u8 local_counter;
 		for(local_counter = 0;local_counter<Copy_u8Size; local_counter++)

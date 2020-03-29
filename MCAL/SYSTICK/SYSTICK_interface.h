@@ -6,7 +6,7 @@
 #ifndef SYSTICK_INTERFACE_H_
 #define SYSTICK_INTERFACE_H_
 
-/*Defining main masks*/
+/*Defining peripheral masks*/
 #define SYSTIC_EXCEPTION_EN			(0x00000002)
 #define SYSTIC_EXCEPTION_DIS		(0x00000000)
 #define SYSTIC_ENABLE_MASK			(0x00000001)

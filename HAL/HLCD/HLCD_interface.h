@@ -33,6 +33,10 @@
 /*Defining LCDs mode*/
 #define HLCD_PIN_MODE		GPIO_CNF_GPO_PUSH_PULL
 #define HLCD_PIN_SPEED		GPIO_MODE_OUTPUT_10_MHZ
+/*Defining default configurations for the LCD*/
+#define LINES_FONT_INIT	 TWO_LINES
+#define CURSOR_INIT		 CURSOR_OFF
+
 /*Defining data bits*/
 #define HLCD_D0_BIT		0
 #define HLCD_D1_BIT 	1
@@ -53,11 +57,7 @@
 #define CLEAR_DISPLAY    		0b00000001
 #define CURSOR_HOME	    		0b00000010
 
-/*Defining default configurations for the LCD*/
-
-#define LINES_FONT_INIT	 TWO_LINES
-#define CURSOR_INIT		 CURSOR_OFF
-
+/*Functions prototypes*/
 STD_ERROR HLCD_u8Init(void);
 STD_ERROR HLCD_u8StartSequence(void);
 STD_ERROR HLCD_u8WriteDataRequest(u8* Copy_u8Data,u8 Copy_u8Size);

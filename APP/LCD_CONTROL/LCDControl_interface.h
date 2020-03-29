@@ -6,6 +6,7 @@
 #ifndef LCDCONTROL_INTERFACE_H_
 #define LCDCONTROL_INTERFACE_H_
 
+/*Functions prototypes*/
 STD_ERROR LCDControl_u8Init(void);
 void LCDControl_voidRunnable(void);
 

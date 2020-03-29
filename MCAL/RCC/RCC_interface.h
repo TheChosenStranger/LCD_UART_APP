@@ -3,12 +3,9 @@
 /* Version : V1.5             */
 /* Date    : 6-3-2020         */
 /******************************/
-
-/*Defining standard error*/
-#define NOK  0
-#define	OK   1
-
-/*Defining Clocls*/
+#ifndef		RCC_INTERFACE_H_
+#define		RCC_INTERFACE_H_
+/*Defining Clocks*/
 #define HSI 0
 #define	HSE 1
 #define	PLL 2
@@ -18,6 +15,10 @@
 #define	APB2 0
 #define	APB1 1
 #define	AHB  2
+
+/*Defining used parameters*/
+#define PLLMUL_MULTIPLIER        ((u8)2)
+#define PLLMUL_MULTIPLIER_SHIFT ((u8)18)
 
 /*Defining the CR register masks*/
 #define HSION_MASK	(0x00000001)
@@ -68,11 +69,6 @@
 #define MCO_PLL_MASK	    (0x0F000000)
 
 #define MCO_CHECK_MASK      (0x08000000)
-/*Defining Peripherals for user use*/
-#define MCO_SYS             MCO_SYS_MASK
-#define MCO_HSI 			MCO_HSI_MASK
-#define MCO_HSE 			MCO_HSE_MASK
-#define MCO_PLL 			MCO_PLL_MASK
 
 #define BUS_CHECK_MASK		(0xC0000000)
 #define AHB_CHECK_MASK		(0x40000000)
@@ -107,51 +103,49 @@
 #define APB2_IOPB_MASK		(0x80000008)
 #define APB2_IOPA_MASK		(0x80000004)
 #define APB2_AFIO_MASK		(0x80000001)
+/*Defining the APB1EN register masks*/
+/*Will be added later*/
 
-/*Defining Peripherals for user use*/
-#define SDIO 	AHB_SDIO_MASK
-#define FSMC 	AHB_FSMC_MASK
-#define CRC 	AHB_CRC_MASK
-#define FLIT 	AHB_FLITF_MASK
-#define SRAM 	AHB_SRAM_MASK
-#define DMA2 	AHB_DMA2_MASK
-#define DMA1 	AHB_DMA1_MASK
-#define SYSTK   AHB_SYSTICK_MASK
-#define TIM11 	APB2_TIM11_MASK
-#define TIM10 	APB2_TIM10_MASK
-#define TIM9 	APB2_TIM9_MASK
-#define ADC3 	APB2_ADC3_MASK
-#define USART1 	APB2_USART1_MASK
-#define TIM8 	APB2_TIM8_MASK
-#define SPI1 	APB2_SPI1_MASK
-#define TIM1 	APB2_TIM1_MASK
-#define ADC2 	APB2_ADC2_MASK
-#define ADC1 	APB2_ADC1_MASK
-#define IOPG 	APB2_IOPG_MASK
-#define IOPF 	APB2_IOPF_MASK
-#define IOPE 	APB2_IOPE_MASK
-#define IOPD 	APB2_IOPD_MASK
-#define IOPC 	APB2_IOPC_MASK
-#define IOPB 	APB2_IOPB_MASK
-#define IOPA 	APB2_IOPA_MASK
-#define AFIO 	APB2_AFIO_MASK
-
-/*Defining clocks freqwuency*/
+/*Defining clocks frequency in MHz*/
 #define HSI_FREQ		8
 #define HSI_FREQ_BY2	4
 #define HSE_FREQ		8
 #define HSE_FREQ_BY2	4
-/*Will be continued*/
-
-/*Defining the APB1EN register masks*/
-/*Will be defined later*/
 
 
-/*Defining helping parameters*/
-#define PLLMUL_MULTIPLIER        ((u8)2)
-#define PLLMUL_MULTIPLIER_SHIFT ((u8)18)
+/*Defining Peripherals for user use*/
+#define SDIO 		AHB_SDIO_MASK
+#define FSMC 		AHB_FSMC_MASK
+#define CRC 		AHB_CRC_MASK
+#define FLIT 		AHB_FLITF_MASK
+#define SRAM 		AHB_SRAM_MASK
+#define DMA2 		AHB_DMA2_MASK
+#define DMA1 		AHB_DMA1_MASK
+#define SYSTK   	AHB_SYSTICK_MASK
+#define TIM11 		APB2_TIM11_MASK
+#define TIM10 		APB2_TIM10_MASK
+#define TIM9 		APB2_TIM9_MASK
+#define ADC3 		APB2_ADC3_MASK
+#define USART1 		APB2_USART1_MASK
+#define TIM8 		APB2_TIM8_MASK
+#define SPI1 		APB2_SPI1_MASK
+#define TIM1 		APB2_TIM1_MASK
+#define ADC2 		APB2_ADC2_MASK
+#define ADC1 		APB2_ADC1_MASK
+#define IOPG 		APB2_IOPG_MASK
+#define IOPF 		APB2_IOPF_MASK
+#define IOPE 		APB2_IOPE_MASK
+#define IOPD 		APB2_IOPD_MASK
+#define IOPC 		APB2_IOPC_MASK
+#define IOPB 		APB2_IOPB_MASK
+#define IOPA 		APB2_IOPA_MASK
+#define AFIO 		APB2_AFIO_MASK
+#define MCO_SYS     MCO_SYS_MASK
+#define MCO_HSI 	MCO_HSI_MASK
+#define MCO_HSE 	MCO_HSE_MASK
+#define MCO_PLL 	MCO_PLL_MASK
 
-/*Defining functions*/
+/*Functions prototypes*/
 STD_ERROR RCC_u8SystemClockSelect(u8 source);
 STD_ERROR RCC_u8EnableClock(u8 source);
 STD_ERROR RCC_u8DisableClock(u8 source);
@@ -161,3 +155,5 @@ STD_ERROR RCC_u8MCOConfigure(u32 source);
 STD_ERROR RCC_u8EnablePeripheral(u32 periferal);
 STD_ERROR RCC_u8DisablePeripheral(u32 periferal);
 STD_ERROR RCC_u8GetPeripheralFreq(u32 periferal,u32 *local_sysclk);
+
+#endif
