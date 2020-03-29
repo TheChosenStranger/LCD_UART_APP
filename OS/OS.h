@@ -37,7 +37,7 @@ extern STD_ERROR Sched_init(void);
  * Runnable -> task function to execute
  * taskPriority -> it will return error if it exceeds the array of tasks limit
  * and return error -> if TICKTIMEUS in cfg file is 0 */
-extern STD_ERROR Sched_CreatTask(task_t* task,u32 taskPriority);
+extern STD_ERROR Sched_CreatTask(task_t* task,u8 taskPriority);
 
 extern STD_ERROR Sched_Start(void);
 
@@ -52,7 +52,7 @@ extern STD_ERROR Task_Suspend(taskRunnable_t tasktosus);
 /* Period -> must be in micro sec
  * and it must be larger than task periodicity time
  * taskRunnable -> address of the task call back function that you want to pause it */
-extern STD_ERROR Task_Pause(taskRunnable_t taskRunnable, u32 Period);
+extern STD_ERROR Task_Pause(taskRunnable_t taskRunnable, u8 Period);
 
 /* taskRunnable -> address of the task call back function that you want to delete it */
 extern STD_ERROR Task_Delete(taskRunnable_t taskRunnable);

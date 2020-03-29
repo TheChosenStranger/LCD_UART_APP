@@ -1,4 +1,4 @@
-#include "../../LIB/STD_TYPES.h"
+#include "STD_TYPES.h"
 
 #include "NVIC_interface.h"
 
@@ -245,8 +245,7 @@ STD_ERROR NVIC_SetPriorityGrouping(u8 Copy_u8PriorityGroup)
 	/* Priority group is only 3 bits, so you must check that it isn't exceed its limit -> 7 */
 	if(Copy_u8PriorityGroup<=7)
 	{
-		/* The number needed for shift to be in correct region to set the priority group is 7
-		 *  and it equals to the maximum number for priority group that it could be */
+		/* The number needed for shift to be in correct region to set the priority group is 8 */
 		SCBx->AIRCR = SCB_AIRCR_VECTKEY_MASK | (Copy_u8PriorityGroup<<8);
 		loc_err = OK;
 	}
@@ -436,4 +435,5 @@ STD_ERROR NVIC_SoftwareInterrupt(u32 Copy_u8InterruptNum)
 	}
 	return loc_err;
 }
+
 

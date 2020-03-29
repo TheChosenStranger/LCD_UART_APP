@@ -33,10 +33,8 @@
 #define I2C1_ER			32
 #define I2C2_EV			33
 #define I2C2_ER			34
-#undef	SPI1
 #define SPI1			35
 #define SPI2			36
-#undef	USART1
 #define USART1			37
 #define USART2			38
 #define USART3			39
@@ -90,7 +88,6 @@
 /**************************************************/
 /* To change base address of vector table and it will be at Code or SRAM */
 #define Code							0x20000000
-#undef	SRAM
 #define SRAM							0x1FFFFFFF
 /*************************************************/
 /* Mask to get the external interrupt number pending at time */
@@ -234,6 +231,8 @@ extern STD_ERROR NVIC_GetPendingFlag(u32 Copy_u32InterruptNum,u8* Copy_PtrPendin
 extern STD_ERROR NVIC_GetActiveFlag(u32 Copy_u32InterruptNum,u8* Copy_PtrActiveStatus);
 
 /* To set number of Priority Groups for all interrupts 						*/
+/* Priority group is only 3 bits, so if you give it number
+ * larger than 7 it will return Error 										*/
 extern STD_ERROR NVIC_SetPriorityGrouping(u8 Copy_u8PriorityGroup);
 
 /* To get the priority group												*/
@@ -262,8 +261,6 @@ extern STD_ERROR NNVIC_EnaGloInterrAndHardFault();
 
 /* To disable interrupts only with priority lower than or equal a certain level
  * Set BASEPRI */
-/**********************/
-/* m7tageen nshof lw momken ne3mlaha get w inna net2akd lw ma7tsh el raqam yraga3 error */
 extern STD_ERROR NVIC_DisInterrsWithPriority(u8 Copy_u8InterruptNum);
 
 /* To cancel the masking of BASEPRI 												*/
@@ -285,7 +282,7 @@ extern STD_ERROR SCB_GetActiveInterruptNum(u8* Copy_PtrInterruptNum);
  * Copy_u32BaseOffset -> the offset of the table base from memory address 0x00000000
  * Copy_u8MemoryRegion -> Code or SRAM to choose whether the vector table is in the code
  * or SRAM memory region 																	*/
-extern STD_ERROR SCB_SetVectorTableBaseOffset(u32 Copy_u32BaseOffset,u32 Copy_u8MemoryRegion);
+extern STD_ERROR SCB_SetVectorTableBaseOffset(u32 Copy_u32BaseOffset,u32 Copy_u32MemoryRegion);
 
 /* It enables faulting or halting when the processor executes an SDIV or UDIV instruction with
  * a divisor of 0																			*/
