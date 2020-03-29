@@ -170,7 +170,7 @@ void USART1_IRQHandler(void){
 }
 /*check if transmitter is sending*/
 void UART_TransmitStatus(u8 * stat){
-	if((UARTx->USART_SR && USART_SR_TXE_MASK) != 0)
+	if((UARTx->USART_SR && USART_SR_TC_MASK) != 0)
 		*stat=0;
 	else
 		*stat=1;
