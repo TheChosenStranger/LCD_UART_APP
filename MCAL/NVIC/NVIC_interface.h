@@ -291,4 +291,3 @@ extern STD_ERROR SCB_EnableTrapDivByZero();
 /* It disables faulting or halting when the processor executes an SDIV or UDIV instruction with
  * a divisor of 0																			*/
 extern STD_ERROR SCB_DisableTrapDivByZero();
-
