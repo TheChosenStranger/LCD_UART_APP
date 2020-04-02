@@ -32,6 +32,10 @@ STD_ERROR GPIO_Config(GPIO_t* p) {
 						<< (pinNumber * GPIO_PIN_OFFSET));					/*clear old config*/
 				GPIO_PORT[p->port]->CRL |= ((p->mode | p->speed)
 						<< (pinNumber * GPIO_PIN_OFFSET));					/*set new config*/
+
+				if((GPIO_CNF_IP_PULL_UP_DOWN | GPIO_MODE_INPUT) == (p->mode | p->speed))
+					GPIO_SetPinValue(tempPin << pinNumber , p->port , GPIO_HIGH);
+
 			} else if (pinNumber < GPIO_CRH_THRESHOLD && p->port <= GPIO_PORT_C) {/*pin in CRH*/
 				GPIO_PORT[p->port]->CRH &=
 						~(GPIO_CLEAR_MASK
@@ -41,6 +45,8 @@ STD_ERROR GPIO_Config(GPIO_t* p) {
 						((p->mode | p->speed)
 								<< ((pinNumber - GPIO_CRL_THRESHOLD)
 										* GPIO_PIN_OFFSET));
+				if((GPIO_CNF_IP_PULL_UP_DOWN | GPIO_MODE_INPUT) == (p->mode | p->speed))
+					GPIO_SetPinValue(tempPin << pinNumber , p->port , GPIO_HIGH);
 			} else {
 				res = NOT_OK;
 			}

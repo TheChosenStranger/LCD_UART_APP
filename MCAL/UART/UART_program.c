@@ -1,19 +1,24 @@
 #include "../../LIB/STD_TYPES.h"
 #include "../GPIO/GPIO_interface.h"
+#include "../RCC/RCC_interface.h"
 #include "UART_register.h"
 #include "UART_config.h"
 #include "UART_interface.h"
 
 
 /*callback functions set to default*/
-rxCbf_t txCallback=&UART_DefaultTxCallback;
-rxCbf_t rxCallback=&UART_DefaultRxCallback;
+rxCbf_t txCallback;
+rxCbf_t rxCallback;
 
+
+static UART_Message_Frame_t UART_TX;
+static UART_Message_Frame_t UART_RX;
 /*TX and RX buffer*/
-static u8 TX_Buffer[32]; 
+/*static u8 TX_Buffer[UART_MAX_MESSAGE_LENGTH]; 
 static u16 TX_Buffer_Len;
-static u8 RX_Buffer[32]; 
-static u16 RX_Buffer_Len;
+static u8 RX_Buffer[UART_MAX_MESSAGE_LENGTH]; 
+static u16 RX_Buffer_Len;*/
+static u8 CurrentState=UART_STATE_NOT_BUSY;
 
 /*	Initialize UART to default configurations
 *	can be modified from config file
@@ -54,8 +59,8 @@ STD_ERROR UART_Init(void){
 		
 		UARTx->USART_BRR=USART_BAUDRATE;
 
-		UARTx->USART_CR2|=USART_STOPBITS;
-		UARTx->USART_CR3|=USART_HALFDUPLEX;
+		UARTx->USART_CR2|=USART_STOPBITS_CONFIG;
+		UARTx->USART_CR3|=USART_HALFDUPLEX_CONFIG;
 
 		UARTx->USART_CR1|=USART_TE_CONFIG;
 		UARTx->USART_CR1|=USART_RE_CONFIG;
@@ -66,26 +71,36 @@ STD_ERROR UART_Init(void){
 *	buffer=any string
 *	len=length of buffer
 */	
-void UART_Send(u8 * buffer, u16 len){
+STD_ERROR UART_Send(u8 * buffer, u16 len){
 	u8 i;
-	UARTx->USART_DR=buffer[0];
-	for (i = 1; i < len; ++i)
-	{
-		TX_Buffer[i]=buffer[i];
+	STD_ERROR Local_STD_ERROR_Stat=OK;
+	if(CurrentState==UART_STATE_NOT_BUSY){
+		CurrentState=UART_STATE_BUSY;
+		UART_TX.Buffer=buffer;
+		UART_TX.MessageLength=len;
+		UART_TX.TransmitionComplete=UART_TRASMIT_NOT_COMPLETE;
+		UART_TX.CurrentPosition=1;
+		UARTx->USART_DR=UART_TX.Buffer[0];
 	}
-	TX_Buffer_Len=len;
+	else{
+		Local_STD_ERROR_Stat=NOT_OK;
+	}
+	return Local_STD_ERROR_Stat;
 	
 }
 /*	start recieving process
 *	buffer=recieved string
 *	len=length of recieved string
 */	
-void UART_Receive(u8* buffer, u16* len){
+STD_ERROR UART_Receive(u8* buffer, u16 len){
 	u8 i;
-	for (i = 0; i < RX_Buffer_Len; ++i) {
-		buffer[i]=RX_Buffer[i];
+	if(CurrentState==UART_STATE_NOT_BUSY && UART_RX.TransmitionComplete== UART_TRASMIT_NOT_COMPLETE){
+		CurrentState=UART_STATE_BUSY;
+		UART_RX.Buffer=buffer;
+		UART_RX.MessageLength=len;
+		UART_RX.TransmitionComplete=UART_TRASMIT_NOT_COMPLETE;
+		UART_RX.CurrentPosition=0;
 	}
-	*len=RX_Buffer_Len;
 	RX_Buffer_Len=0;
 }
 /*
@@ -113,8 +128,8 @@ STD_ERROR UART_Configure(u32 baudrate, u8 stopBits, u32 parity){
 	else{
 		Local_STD_ERROR_Stat=NOT_OK;
 	}
-	if((USART_BRR_MASK && baudrate) == baudrate){
-		UARTx->USART_BRR=baudrate;
+	if(UART_VALIDATE_BAUDRATE(baudrate)){
+		UART_CalculateBaudrate(baudrate);
 	}
 	else{
 		Local_STD_ERROR_Stat=NOT_OK;
@@ -151,22 +166,34 @@ STD_ERROR UART_SetRxCallbackFnc(rxCbf_t rxcbf){
 	return Local_STD_ERROR_Stat;
 }
 /*default callback function for transmitter*/
-void UART_DefaultTxCallback(void){
-	static u16 Local_u16NextChar=0;
-	if(TX_Buffer_Len>Local_u16NextChar)
-		UARTx->USART_DR=TX_Buffer[Local_u16NextChar++];
-}
-/*default callback function for reciver*/
-void UART_DefaultRxCallback(void){
-	static u16 Local_u16NextChar=0;
-	RX_Buffer_Len=Local_u16NextChar;
-	RX_Buffer[Local_u16NextChar++]=UARTx->USART_DR;
-}
 void USART1_IRQHandler(void){
-	if((UARTx->USART_SR && USART_SR_TXE_MASK) != 0)
-		txCallback();
-	if((UARTx->USART_SR && USART_SR_RXNE_MASK) != 0)
-		rxCallback();
+	if((UARTx->USART_SR && USART_SR_TXE_MASK) != 0){
+		if(UART_TX.TransmitionComplete==UART_TRASMIT_NOT_COMPLETE){
+			if(UART_TX.CurrentPosition<UART_TX.MessageLength){
+				UARTx->USART_DR=UART_TX.Buffer[UART_TX.CurrentPosition++];
+			}
+			else{
+				UART_TX.TransmitionComplete=UART_TRASMIT_COMPLETE;
+				CurrentState=UART_STATE_NOT_BUSY;
+				UART_TX.MessageLength=0;
+				UART_TX.CurrentPosition=0;
+				txCallback();
+			}
+		}
+	}
+	if((UARTx->USART_SR && USART_SR_RXNE_MASK) != 0){
+		if(UART_RX.TransmitionComplete==UART_TRASMIT_NOT_COMPLETE){
+			if(UART_RX.CurrentPosition<UART_RX.MessageLength){
+				UART_RX.Buffer[UART_RX.CurrentPosition++]=UARTx->USART_DR;
+			}
+			else{
+				UART_RX.TransmitionComplete=UART_TRASMIT_COMPLETE;
+				CurrentState=UART_STATE_NOT_BUSY;
+				UART_RX.MessageLength=0;
+				UART_RX.CurrentPosition=0;
+				rxCallback();
+			}
+	}
 }
 /*check if transmitter is sending*/
 void UART_TransmitStatus(u8 * stat){
@@ -181,4 +208,15 @@ void UART_RecieveStatus(u8 * stat){
 			*stat=0;
 		else
 			*stat=1;
+}
+static void UART_CalculateBaudrate(u32 Baudrate){
+	u8 clock;
+	RCC_GetSytemFreq(&clock); //7ot el fnc bta3tak ya 8areeb
+	u32 tempB=baudrate*clock;
+    u32 baudrateMentesa=((tempB)/1000);
+    u32 baudrateExp=(tempB-baudrateMentesa)/100;
+    if(baudrateExp%10>5)
+        baudrateExp+=10;
+    baudrateExp=(16*baudrateExp)/10;
+    UARTx->USART_BRR=(baudrateMentesa<<4)|(baudrateExp);
 }
