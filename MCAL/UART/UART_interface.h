@@ -113,5 +113,5 @@ void UART_DefaultTxCallback(void);
 void UART_DefaultRxCallback(void);
 void UART_TransmitStatus(u8 * stat);
 void UART_RecieveStatus(u8 * stat);
-static void UART_CalculateBaudrate(u32 Baudrate);
+void UART_CalculateBaudrate(u32 Baudrate);
 #endif
