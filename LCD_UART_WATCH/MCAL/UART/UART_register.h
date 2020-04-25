@@ -1,0 +1,18 @@
+#ifndef UART_REGISTER_H
+#define UART_REGISTER_H 
+
+#define UART_BASE_ADDRESS 0x40013800
+
+typedef struct UART{
+	u32 USART_SR;
+	u32 USART_DR;
+	u32 USART_BRR;
+	u32 USART_CR1;
+	u32 USART_CR2;
+	u32 USART_CR3;
+	u32 USART_GTPR;
+}UART_t;
+
+#define UARTx ((UART_t volatile * const)UART_BASE_ADDRESS)
+
+#endif
