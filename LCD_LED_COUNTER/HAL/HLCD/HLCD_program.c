@@ -204,33 +204,39 @@ static void HLCD_voidWriteDataCmd(u8 Copy_u8DataCmd)
 /*This function does the initialization sequence requried to start the LCD*/
 static void HLCD_voidInitializationSequence(void)
 {
-	switch(HLCD_state)	
+	static u8 initializationCounter = INIT_SEQ_COUNTER;
+	if(!initializationCounter)
 	{
-		case HLCD_INITIAL_STATE:/*Set up the LCD*/
-		HLCD_voidWriteCmd(LINES_FONT_INIT);
-		HLCD_state = HLCD_SETUP_LCD_STATE ;
-		break;
-		case HLCD_SETUP_LCD_STATE : /*Make the E pin low*/	
-		GPIO_SetPinValue(HLCD_E_PIN,HLCD_E_PORT,GPIO_LOW);
-		HLCD_state = HLCD_SETUP_CURSOR_STATE ;
-		break;
-		
-		case HLCD_SETUP_CURSOR_STATE : /*Set up the cursor*/
-		HLCD_voidWriteCmd(CURSOR_INIT);
-		HLCD_state = HLCD_EPIN_RESET1_STATE ;
-		break;
-		case HLCD_EPIN_RESET1_STATE : /*Make the E pin low*/	
-		GPIO_SetPinValue(HLCD_E_PIN,HLCD_E_PORT,GPIO_LOW);
-		HLCD_state = HLCD_DISPLAY_CLEAR_STATE ;
-		break;
-		case HLCD_DISPLAY_CLEAR_STATE : /*Clear the display*/
-		HLCD_voidWriteCmd(CLEAR_DISPLAY);
-		HLCD_state = HLCD_EPIN_RESET2_STATE ;
-		break;
-		
-		case HLCD_EPIN_RESET2_STATE :  /*Make the E pin low*/
-		GPIO_SetPinValue(HLCD_E_PIN,HLCD_E_PORT,GPIO_LOW);
-		HLCD_state = HLCD_INITIALIZATION_COMPLETE ;
-		break;
-	}	
+		switch(HLCD_state)	/*Start the initialization sequence*/
+		{
+			case HLCD_INITIAL_STATE:/*S0: Set up the LCD*/
+			HLCD_voidWriteCmd(LINES_FONT_INIT);
+			HLCD_state = HLCD_SETUP_LCD_STATE ;
+			break;
+			case HLCD_SETUP_LCD_STATE : /*S1: Make the E pin low*/
+			GPIO_SetPinValue(&HLCD_E,OUTPUT_LOW);
+			HLCD_state = HLCD_SETUP_CURSOR_STATE ;
+			break;
+			case HLCD_SETUP_CURSOR_STATE : /*S2: Set up the cursor*/
+			HLCD_voidWriteCmd(CURSOR_INIT);
+			HLCD_state = HLCD_EPIN_RESET1_STATE ;
+			break;
+			case HLCD_EPIN_RESET1_STATE : /*S3: Make the E pin low*/
+			GPIO_SetPinValue(&HLCD_E,OUTPUT_LOW);
+			HLCD_state = HLCD_DISPLAY_CLEAR_STATE ;
+			break;
+			case HLCD_DISPLAY_CLEAR_STATE : /*S4: Clear the display*/
+			HLCD_voidWriteCmd(CLEAR_DISPLAY);
+			HLCD_state = HLCD_EPIN_RESET2_STATE;
+			break;
+			case HLCD_EPIN_RESET2_STATE:  /*S5: Make the E pin low*/
+			GPIO_SetPinValue(&HLCD_E,OUTPUT_LOW);
+			HLCD_state = HLCD_INITIALIZATION_COMPLETE ;
+			break;
+		}
+	}
+	else
+	{
+		initializationCounter--;		/*Delay before init sequence*/
+	}
 }

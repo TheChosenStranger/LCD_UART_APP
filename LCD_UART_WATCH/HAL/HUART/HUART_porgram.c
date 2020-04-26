@@ -18,7 +18,7 @@ STD_ERROR HUART_Transmit(u8* buffer,u16 length){
 	return Local_STD_ERROR_stat;
 }
 
-STD_ERROR HUART_Recieve(u8* buffer,u16* length){
+STD_ERROR HUART_Recieve(u8* buffer,u16 length){
 	STD_ERROR Local_STD_ERROR_stat=OK;
 	u8 temp;
 	UART_RecieveStatus(&temp);

@@ -1,0 +1,44 @@
+- Frame id		 0xXX
+- # of frames 1   0b00654321 
+- DATE  1
+- UP    2
+- DOWN  3
+- RIGHT 4
+- LEFT  5
+- EDIT  6
+
+
+app1runnable()
+{
+	//check switch status
+		data = get(0)
+		data |= get(1) << 1
+		data |= get(2) << 2
+		data |= get(3) << 3
+		data |= get(4) << 4
+		data |= get(5) << 5
+		data |= get(6) << 6
+	//construct frame
+		cons(data2);
+	//UART send
+		send(data2)
+}
+mode = time date edit
+app2runnable()
+{
+	//UART rec
+		rec(data2);
+	//Deconstruct Frame
+		dec(data);
+	//Action depending on data
+		//lw UP,Down,right,left && mode = edit ==> OK
+		//else none
+		
+		//lw Date/Time  && mode = time ===> mode = Date
+		//else if mode = date ===> mode = time
+
+		//lw edit/add  && mode = time ===> mode = edit
+		//else if mode = edit ===> mode = time
+
+		if(logic);
+}

@@ -33,7 +33,9 @@
 #define HLCD_D6_PORT	PORTA
 #define HLCD_D7_PORT	PORTA
 /*Configuring LCDs mode*/
-#define HLCD_PIN_MODE		OUTPUT_PUSHPULL_02MHZ
+#define HLCD_PIN_MODE		GPIO_CNF_GPO_PUSH_PULL
+/*Configuring LCDs speed*/
+#define HLCD_PIN_SPEED		GPIO_MODE_OUTPUT_2_MHZ
 /*The default configurations for the LCD*/
 #define LINES_FONT_INIT	 TWO_LINES	/* TWO_LINES*/
 #define CURSOR_INIT		 CURSOR_OFF /* CURSOR_OFF	-	CURSOR_ON */

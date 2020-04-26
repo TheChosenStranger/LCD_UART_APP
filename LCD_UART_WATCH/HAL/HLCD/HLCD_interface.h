@@ -27,11 +27,12 @@
 #define CLEAR_DISPLAY    		0b00000001
 #define CURSOR_HOME	    		0b00000010
 
-extern u8 HLCD_u8Init(void);
-extern u8 HLCD_u8StartSequence(void);
-extern u8 HLCD_u8WriteDataRequest(u8* Copy_u8Data,u8 Copy_u8Size);
-extern u8 HLCD_u8WriteCmdRequest(u8 Copy_u8Cmd);
-extern u8 HLCD_u8CursorPosition(u8 Copy_u8Row, u8 Copy_u8Column);
+/*Functions prototypes*/
+extern STD_ERROR HLCD_u8Init(void);
+extern STD_ERROR HLCD_u8StartSequence(void);
+extern STD_ERROR HLCD_u8WriteDataRequest(u8* Copy_u8Data,u8 Copy_u8Size);
+extern STD_ERROR HLCD_u8WriteCmdRequest(u8 Copy_u8Cmd);
+extern STD_ERROR HLCD_u8CursorPosition(u8 Copy_u8Row, u8 Copy_u8Column);
 extern void HLCD_voidRunnable(void);
 
 #endif

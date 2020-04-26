@@ -17,14 +17,15 @@ typedef struct{
 }tProtocolHeader_t;
 
 typedef struct{
+	u8* data;
+	u8 EOF;
+}frameData_t;
+
+typedef struct{
 	tProtocolHeader_t header;
 	u8 frameData[FRAMECONST_MAX_FRAME_DATA_LENGTH + 1];
 }tProtocol_t;
 
-typedef struct{
-	u8* data;
-	u8 EOF;
-}frameData_t;
 STD_ERROR FRAMECONST_FrameConstructor(frameData_t*,u8,u16,u8*);
 
 
