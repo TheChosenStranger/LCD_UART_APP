@@ -1,2 +1,3 @@
-# LCD_UART_APP
-LCD+Switch+LED+UART
+# STM applications
+LCD+Switch+LED+UART (counter)
+LCD+Switches+UART (watch)
